@@ -14,6 +14,7 @@ import {
   Users,
   Palette,
   Globe,
+  Brain,
 } from "lucide-react";
 
 const courses: Course[] = [
@@ -76,6 +77,16 @@ const courses: Course[] = [
     description:
       "Perfecciona tu comunicación en inglés para interactuar con clientes internacionales con confianza.",
     icon: <Globe className="w-7 h-7" />,
+  },
+  {
+    id: 7,
+    title: "Inteligencia Artificial",
+    link: "https://lovirtual-ia.lovable.app/",
+    duration: "3 Semanas",
+    lessons: "8 Módulos",
+    description:
+      "Domina las herramientas de IA para optimizar tu productividad y ofrecer soluciones innovadoras a tus clientes.",
+    icon: <Brain className="w-7 h-7" />,
   },
 ];
 
