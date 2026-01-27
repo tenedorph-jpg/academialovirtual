@@ -75,7 +75,7 @@ const MarqueeColumn = ({ testimonials, duration = 25, reverse = false }: Marquee
 
 const TestimonialsSection = () => {
   return (
-    <section className="py-16 md:py-24 relative overflow-hidden hero-gradient">
+    <section className="py-16 md:py-24 relative overflow-hidden" style={{ backgroundColor: "#F0F9FF" }}>
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div
@@ -85,10 +85,10 @@ const TestimonialsSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
             Lo Que Dicen Nuestros Estudiantes
           </h2>
-          <p className="text-primary-foreground/80 max-w-2xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto">
             Testimonios reales de profesionales que han transformado su carrera con LoVirtual Academy.
           </p>
         </motion.div>
@@ -99,7 +99,7 @@ const TestimonialsSection = () => {
           <div 
             className="absolute top-0 left-0 right-0 h-24 z-10 pointer-events-none"
             style={{ 
-              background: "linear-gradient(to bottom, hsl(200, 99%, 25%) 0%, transparent 100%)" 
+              background: "linear-gradient(to bottom, #F0F9FF 0%, transparent 100%)" 
             }}
           />
           
@@ -107,7 +107,7 @@ const TestimonialsSection = () => {
           <div 
             className="absolute bottom-0 left-0 right-0 h-24 z-10 pointer-events-none"
             style={{ 
-              background: "linear-gradient(to top, hsl(196, 100%, 41%) 0%, transparent 100%)" 
+              background: "linear-gradient(to top, #F0F9FF 0%, transparent 100%)" 
             }}
           />
 
