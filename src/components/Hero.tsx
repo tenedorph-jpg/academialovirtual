@@ -1,11 +1,107 @@
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import { GraduationCap, Sparkles } from "lucide-react";
+import { useRef, MouseEvent } from "react";
+
+// Floating particle component
+interface FloatingParticleProps {
+  size: number;
+  initialX: number;
+  initialY: number;
+  duration: number;
+  delay: number;
+  opacity: number;
+}
+
+const FloatingParticle = ({ size, initialX, initialY, duration, delay, opacity }: FloatingParticleProps) => (
+  <motion.div
+    className="absolute rounded-full bg-white pointer-events-none"
+    style={{
+      width: size,
+      height: size,
+      left: `${initialX}%`,
+      opacity: opacity,
+    }}
+    initial={{ y: `${initialY}vh`, opacity: 0 }}
+    animate={{
+      y: [initialY, initialY - 120],
+      opacity: [0, opacity, opacity, 0],
+    }}
+    transition={{
+      duration,
+      delay,
+      repeat: Infinity,
+      ease: "linear",
+    }}
+  />
+);
+
+// Generate random particles
+const generateParticles = (count: number): FloatingParticleProps[] => {
+  return Array.from({ length: count }, (_, i) => ({
+    size: 4 + Math.random() * 12,
+    initialX: Math.random() * 100,
+    initialY: 80 + Math.random() * 40,
+    duration: 12 + Math.random() * 8,
+    delay: Math.random() * 10,
+    opacity: 0.1 + Math.random() * 0.15,
+  }));
+};
+
+const particles = generateParticles(20);
 
 const Hero = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  
+  // Mouse position tracking
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  
+  // Smooth spring animation for parallax
+  const springConfig = { damping: 25, stiffness: 150 };
+  const parallaxX = useSpring(mouseX, springConfig);
+  const parallaxY = useSpring(mouseY, springConfig);
+  
+  // Transform values for different layers (opposite direction for parallax effect)
+  const layer1X = useTransform(parallaxX, [-0.5, 0.5], [30, -30]);
+  const layer1Y = useTransform(parallaxY, [-0.5, 0.5], [30, -30]);
+  const layer2X = useTransform(parallaxX, [-0.5, 0.5], [20, -20]);
+  const layer2Y = useTransform(parallaxY, [-0.5, 0.5], [20, -20]);
+  const layer3X = useTransform(parallaxX, [-0.5, 0.5], [10, -10]);
+  const layer3Y = useTransform(parallaxY, [-0.5, 0.5], [10, -10]);
+
+  const handleMouseMove = (e: MouseEvent<HTMLElement>) => {
+    if (!sectionRef.current) return;
+    const rect = sectionRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
   return (
-    <section className="relative min-h-[70vh] lg:min-h-[80vh] flex items-center justify-center hero-gradient overflow-hidden">
-      {/* Abstract decorative elements */}
-      <div className="absolute inset-0 overflow-hidden">
+    <section 
+      ref={sectionRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="relative min-h-[70vh] lg:min-h-[80vh] flex items-center justify-center hero-gradient overflow-hidden"
+    >
+      {/* Floating Particles Layer */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        {particles.map((particle, index) => (
+          <FloatingParticle key={index} {...particle} />
+        ))}
+      </div>
+
+      {/* Parallax decorative elements - Layer 1 (farthest) */}
+      <motion.div 
+        className="absolute inset-0 overflow-hidden pointer-events-none z-0"
+        style={{ x: layer1X, y: layer1Y }}
+      >
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 0.1, scale: 1 }}
@@ -18,25 +114,53 @@ const Hero = () => {
           transition={{ duration: 1.5, delay: 0.3, ease: "easeOut" }}
           className="absolute -bottom-1/4 -left-1/4 w-[600px] h-[600px] rounded-full bg-accent/40 blur-3xl"
         />
-        
-        {/* Floating decorative circles */}
+      </motion.div>
+
+      {/* Parallax decorative elements - Layer 2 (middle) */}
+      <motion.div 
+        className="absolute inset-0 overflow-hidden pointer-events-none z-0"
+        style={{ x: layer2X, y: layer2Y }}
+      >
         <motion.div
           animate={{ y: [-10, 10, -10] }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-20 right-[15%] w-4 h-4 rounded-full bg-highlight/40"
+          className="absolute top-20 right-[15%] w-4 h-4 rounded-full bg-white/30"
         />
         <motion.div
           animate={{ y: [10, -10, 10] }}
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-32 left-[20%] w-6 h-6 rounded-full bg-highlight/30"
+          className="absolute bottom-32 left-[20%] w-6 h-6 rounded-full bg-white/20"
         />
         <motion.div
           animate={{ y: [-8, 8, -8] }}
           transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-1/3 left-[10%] w-3 h-3 rounded-full bg-primary-foreground/20"
+          className="absolute top-1/3 left-[10%] w-3 h-3 rounded-full bg-white/15"
         />
-      </div>
+      </motion.div>
 
+      {/* Parallax decorative elements - Layer 3 (closest, subtle movement) */}
+      <motion.div 
+        className="absolute inset-0 overflow-hidden pointer-events-none z-0"
+        style={{ x: layer3X, y: layer3Y }}
+      >
+        <motion.div
+          animate={{ y: [-5, 5, -5], x: [-3, 3, -3] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[40%] right-[8%] w-5 h-5 rounded-full bg-highlight/25"
+        />
+        <motion.div
+          animate={{ y: [5, -5, 5], x: [3, -3, 3] }}
+          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-[40%] left-[5%] w-4 h-4 rounded-full bg-white/20"
+        />
+        <motion.div
+          animate={{ y: [-6, 6, -6] }}
+          transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[60%] right-[25%] w-2 h-2 rounded-full bg-white/25"
+        />
+      </motion.div>
+
+      {/* Content Layer */}
       <div className="container relative z-10 px-6 py-20 text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -90,7 +214,7 @@ const Hero = () => {
       </div>
 
       {/* Bottom wave decoration */}
-      <div className="absolute bottom-0 left-0 right-0">
+      <div className="absolute bottom-0 left-0 right-0 z-[5]">
         <svg
           viewBox="0 0 1440 120"
           fill="none"
