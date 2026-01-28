@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const testimonials = [
   { name: "Ana Meza", text: "Fue muy útil para conocer mejor a la empresa y la esencia de lo que es ser un asistente virtual." },
@@ -31,10 +32,25 @@ interface TestimonialCardProps {
   text: string;
 }
 
+const getInitials = (name: string) => {
+  const parts = name.split(" ");
+  if (parts.length >= 2) {
+    return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+  }
+  return name.slice(0, 2).toUpperCase();
+};
+
 const TestimonialCard = ({ name, text }: TestimonialCardProps) => (
   <div className="bg-white rounded-xl shadow-sm p-5 mb-4 border border-border/50">
     <p className="text-muted-foreground text-sm leading-relaxed mb-3">"{text}"</p>
-    <p className="font-semibold text-primary text-sm">— {name}</p>
+    <div className="flex items-center gap-3">
+      <Avatar className="h-8 w-8 bg-primary">
+        <AvatarFallback className="bg-primary text-primary-foreground text-xs font-semibold">
+          {getInitials(name)}
+        </AvatarFallback>
+      </Avatar>
+      <p className="font-semibold text-primary text-sm">{name}</p>
+    </div>
   </div>
 );
 
