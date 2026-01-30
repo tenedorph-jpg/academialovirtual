@@ -44,39 +44,14 @@ import {
   mockCourses,
   mockPendingReviews,
   dashboardKPIs,
+  coursePopularityData,
+  completionRateData,
+  averageTimePerCourseData,
+  attendeesPerCourseData,
+  exportStudentsData,
+  exportCoursesSummaryData,
 } from "@/data/mockData";
 import { useToast } from "@/hooks/use-toast";
-
-// Datos mock realistas para los gráficos
-const coursePopularityData = [
-  { name: "Asistente Virtual", enrolled: 85 },
-  { name: "Marketing Digital", enrolled: 72 },
-  { name: "Customer Success", enrolled: 48 },
-  { name: "Herramientas Digitales", enrolled: 95 },
-  { name: "Community Manager", enrolled: 63 },
-];
-
-const completionRateData = [
-  { name: "Completados", value: 45, fill: "hsl(var(--primary))" },
-  { name: "En Progreso", value: 38, fill: "hsl(var(--accent))" },
-  { name: "No Iniciados", value: 17, fill: "hsl(var(--muted-foreground))" },
-];
-
-const averageTimeData = [
-  { name: "Asistente Virtual", hours: 42 },
-  { name: "Marketing Digital", hours: 35 },
-  { name: "Customer Success", hours: 28 },
-  { name: "Herramientas", hours: 22 },
-  { name: "Community Manager", hours: 30 },
-];
-
-const attendeesPerCourseData = [
-  { name: "Asistente Virtual", attendees: 85, active: 72 },
-  { name: "Marketing Digital", attendees: 72, active: 58 },
-  { name: "Customer Success", attendees: 48, active: 41 },
-  { name: "Herramientas", attendees: 95, active: 88 },
-  { name: "Community Manager", attendees: 63, active: 52 },
-];
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -171,10 +146,9 @@ const AdminDashboard = () => {
   ];
 
   const chartConfig = {
-    enrolled: { label: "Inscritos", color: "hsl(var(--primary))" },
+    students: { label: "Estudiantes", color: "hsl(var(--primary))" },
     hours: { label: "Horas", color: "hsl(var(--accent))" },
     attendees: { label: "Asistentes", color: "hsl(var(--primary))" },
-    active: { label: "Activos", color: "hsl(var(--accent))" },
   };
 
   // Funciones de exportación CSV
@@ -676,14 +650,14 @@ const AdminDashboard = () => {
                         <YAxis 
                           dataKey="name" 
                           type="category" 
-                          width={100} 
-                          tick={{ fontSize: 11 }} 
+                          width={130} 
+                          tick={{ fontSize: 10 }} 
                           tickLine={false}
                           axisLine={false}
                         />
                         <ChartTooltip content={<ChartTooltipContent />} />
                         <Bar 
-                          dataKey="enrolled" 
+                          dataKey="students" 
                           fill="hsl(var(--primary))" 
                           radius={[0, 4, 4, 0]}
                           maxBarSize={30}
@@ -745,12 +719,12 @@ const AdminDashboard = () => {
                   <ChartContainer config={chartConfig} className="h-[280px] w-full">
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart 
-                        data={averageTimeData}
+                        data={averageTimePerCourseData}
                         margin={{ top: 5, right: 20, left: 10, bottom: 40 }}
                       >
                         <CartesianGrid strokeDasharray="3 3" vertical={false} />
                         <XAxis 
-                          dataKey="name" 
+                          dataKey="course" 
                           tick={{ fontSize: 10 }} 
                           angle={-45}
                           textAnchor="end"
@@ -786,7 +760,7 @@ const AdminDashboard = () => {
                       >
                         <CartesianGrid strokeDasharray="3 3" vertical={false} />
                         <XAxis 
-                          dataKey="name" 
+                          dataKey="course" 
                           tick={{ fontSize: 10 }} 
                           angle={-45}
                           textAnchor="end"
@@ -795,22 +769,12 @@ const AdminDashboard = () => {
                         />
                         <YAxis tick={{ fontSize: 11 }} tickLine={false} axisLine={false} />
                         <ChartTooltip content={<ChartTooltipContent />} />
-                        <Legend 
-                          verticalAlign="top" 
-                          height={36}
-                          formatter={(value) => value === 'attendees' ? 'Total' : 'Activos'}
-                        />
                         <Bar 
                           dataKey="attendees" 
+                          name="Total Asistentes"
                           fill="hsl(var(--primary))" 
                           radius={[4, 4, 0, 0]}
-                          maxBarSize={40}
-                        />
-                        <Bar 
-                          dataKey="active" 
-                          fill="hsl(var(--accent))" 
-                          radius={[4, 4, 0, 0]}
-                          maxBarSize={40}
+                          maxBarSize={50}
                         />
                       </BarChart>
                     </ResponsiveContainer>
