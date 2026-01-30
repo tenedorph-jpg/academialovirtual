@@ -229,23 +229,53 @@ export const mockStudyStats: StudyStats[] = [
 
 // Course popularity data for charts
 export const coursePopularityData = [
-  { name: 'Asistente Virtual', enrolled: 85 },
-  { name: 'Redes Sociales', enrolled: 62 },
-  { name: 'Customer Success', enrolled: 48 },
-  { name: 'Herramientas Digitales', enrolled: 95 },
+  { name: 'Asistente Virtual Pro', students: 1250 },
+  { name: 'Marketing en Redes Sociales', students: 980 },
+  { name: 'Customer Success Manager', students: 850 },
+  { name: 'Herramientas Digitales 2024', students: 1400 },
+  { name: 'Gestión de Tiempo', students: 600 },
 ];
 
 // Completion rate data for pie chart
 export const completionRateData = [
-  { name: 'Completados', value: 45, fill: 'hsl(var(--primary))' },
-  { name: 'En Progreso', value: 38, fill: 'hsl(var(--accent))' },
-  { name: 'No Iniciados', value: 17, fill: 'hsl(var(--muted))' },
+  { name: 'Completados', value: 45, fill: '#005f73' },
+  { name: 'En Progreso', value: 38, fill: '#0a9396' },
+  { name: 'No Iniciados', value: 17, fill: '#e9d8a6' },
+];
+
+// Average time per course data
+export const averageTimePerCourseData = [
+  { course: 'Asistente Virtual Pro', hours: 45 },
+  { course: 'Marketing RRSS', hours: 32 },
+  { course: 'Customer Success', hours: 28 },
+  { course: 'Herramientas Digitales', hours: 15 },
+];
+
+// Attendees per course data
+export const attendeesPerCourseData = [
+  { course: 'Asistente Virtual Pro', attendees: 1100 },
+  { course: 'Marketing RRSS', attendees: 900 },
+  { course: 'Customer Success', attendees: 800 },
+  { course: 'Herramientas Digitales', attendees: 1350 },
+];
+
+// Export data - Students
+export const exportStudentsData = [
+  { id: 1, name: 'Ana García', course: 'Asistente Virtual Pro', progress: '100%', status: 'Completado' },
+  { id: 2, name: 'Carlos Ruiz', course: 'Marketing RRSS', progress: '45%', status: 'En Progreso' },
+  { id: 3, name: 'Lucía Méndez', course: 'Customer Success', progress: '10%', status: 'En Progreso' },
+];
+
+// Export data - Courses Summary
+export const exportCoursesSummaryData = [
+  { id: 101, name: 'Asistente Virtual Pro', totalEnrolled: 1250, avgScore: 9.2 },
+  { id: 102, name: 'Marketing RRSS', totalEnrolled: 980, avgScore: 8.5 },
 ];
 
 // Dashboard KPIs
 export const dashboardKPIs = {
-  totalStudents: 150,
+  totalStudents: 5080,
   pendingReviews: 6,
   approvedSprints: 45,
-  activeCourses: 7,
+  activeCourses: 5,
 };
