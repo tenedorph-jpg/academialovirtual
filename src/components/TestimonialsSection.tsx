@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Star } from "lucide-react";
 
 const testimonials = [
   { name: "Ana Meza", text: "Fue muy útil para conocer mejor a la empresa y la esencia de lo que es ser un asistente virtual." },
@@ -42,6 +43,11 @@ const getInitials = (name: string) => {
 
 const TestimonialCard = ({ name, text }: TestimonialCardProps) => (
   <div className="bg-white rounded-xl shadow-sm p-5 mb-4 border border-border/50">
+    <div className="flex gap-1 mb-3">
+      {[...Array(5)].map((_, i) => (
+        <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+      ))}
+    </div>
     <p className="text-muted-foreground text-sm leading-relaxed mb-3">"{text}"</p>
     <div className="flex items-center gap-3">
       <Avatar className="h-8 w-8 bg-primary">
