@@ -6,8 +6,8 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+    <nav className="absolute top-0 left-0 right-0 z-50 w-full">
+      <div className="container mx-auto px-4 h-20 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 group">
           <div className="p-2 rounded-lg bg-primary/20 group-hover:bg-primary/30 transition-colors">
