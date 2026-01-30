@@ -6,36 +6,23 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 group">
-          <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-            <GraduationCap className="h-6 w-6 text-primary" />
+          <div className="p-2 rounded-lg bg-white/10 group-hover:bg-white/20 transition-colors">
+            <GraduationCap className="h-6 w-6 text-white" />
           </div>
-          <span className="font-bold text-lg text-foreground">
-            Academia <span className="text-primary">LoVirtual</span>
+          <span className="font-bold text-lg text-white">
+            Academia <span className="text-highlight">LoVirtual</span>
           </span>
         </Link>
-
-        {/* Navigation Links - Hidden on mobile */}
-        <div className="hidden md:flex items-center gap-6">
-          <a href="/#cursos" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
-            Cursos
-          </a>
-          <a href="/#nosotros" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
-            Nosotros
-          </a>
-          <a href="/#contacto" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
-            Contacto
-          </a>
-        </div>
 
         {/* Login Button */}
         <Button
           variant="outline"
           onClick={() => navigate('/login')}
-          className="gap-2 border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground transition-all"
+          className="gap-2 border-white/30 bg-white/10 text-white hover:bg-white/20 hover:text-white transition-all backdrop-blur-sm"
         >
           <LogIn className="h-4 w-4" />
           <span className="hidden sm:inline">Iniciar Sesión</span>
